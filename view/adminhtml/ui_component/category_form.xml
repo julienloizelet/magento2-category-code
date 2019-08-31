@@ -1,0 +1,41 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * Okaeli_CategoryCode  Extension
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the GNU GENERAL PUBLIC LICENSE Version 3
+ * that is bundled with this package in the file LICENSE
+ *
+ * @category Okaeli
+ * @package Okaeli_CategoryCode
+ * @copyright  Copyright (c)  2019 Julien Loizelet
+ * @author     Julien Loizelet <julienloizelet@okaeli.com>
+ * @license    GNU GENERAL PUBLIC LICENSE Version 3
+ *
+ */
+
+ /**
+ *
+ * @category Okaeli
+ * @package  Okaeli_CategoryCode
+ * @module   CategoryCode
+ * @author   Julien Loizelet <julienloizelet@okaeli.com>
+ *
+ */
+ -->
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <fieldset name="general">
+        <field name="okaeli_category_code">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">400</item>
+                    <item name="dataType" xsi:type="string">string</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="label" xsi:type="string" translate="true">Category Code</item>
+                </item>
+            </argument>
+        </field>
+    </fieldset>
+</form>

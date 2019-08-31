@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Okaeli_CategoryCode  Extension
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the GNU GENERAL PUBLIC LICENSE Version 3
+ * that is bundled with this package in the file LICENSE
+ *
+ * @category Okaeli
+ * @package Okaeli_CategoryCode
+ * @copyright  Copyright (c)  2019 Julien Loizelet
+ * @author     Julien Loizelet <julienloizelet@okaeli.com>
+ * @license    GNU GENERAL PUBLIC LICENSE Version 3
+ *
+ */
+
+ /**
+ *
+ * @category Okaeli
+ * @package  Okaeli_CategoryCode
+ * @module   CategoryCode
+ * @author   Julien Loizelet <julienloizelet@okaeli.com>
+ *
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="catalog">
+            <resource>Okaeli_CategoryCode::categorycode_configuration</resource>
+            <group id="frontend">
+                <field id="okaeli_category_layout_update" translate="label" type="select" sortOrder="1000" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Add category code handle</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

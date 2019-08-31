@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Okaeli_CategoryCode  Extension
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the GNU GENERAL PUBLIC LICENSE Version 3
+ * that is bundled with this package in the file LICENSE
+ *
+ * @category Okaeli
+ * @package Okaeli_CategoryCode
+ * @copyright  Copyright (c)  2019 Julien Loizelet
+ * @author     Julien Loizelet <julienloizelet@okaeli.com>
+ * @license    GNU GENERAL PUBLIC LICENSE Version 3
+ *
+ */
+
+ /**
+ *
+ * @category Okaeli
+ * @package  Okaeli_CategoryCode
+ * @module   CategoryCode
+ * @author   Julien Loizelet <julienloizelet@okaeli.com>
+ *
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="layout_load_before">
+        <observer name="okaeli_categorycode_observer_addhandle" instance="Okaeli\CategoryCode\Observer\AddHandle" />
+    </event>
+</config>
+
+
