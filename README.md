@@ -82,6 +82,17 @@ you were using the Id or even worse, the name ...
 2. If you need to update layout of a category and do not want to do it in the backend, you should use the handle
 `catalog_category_code_here-the-code-of-the-category`
 
+For example, suppose that you need to remove the title of the category page **only** for the category having the code `modify-me`.
+Then, you could create a `catalog_category_code_modify-me.xml` in the `app/design/frontend/MyCompany/MyTheme/Magento_Catalog/layout` folder with the following content :
+
+    <?xml version="1.0"?>
+    <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+        <body>
+            <referenceBlock name="page.main.title" remove="true"/>
+        </body>
+    </page>
+
+
 ### Configurations
 
 This module comes with one configuration :
