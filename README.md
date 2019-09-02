@@ -15,6 +15,8 @@
 
 `Okaeli_CategoryCode` is a Magento® 2 extension that will add a "code" attribute to categories.
 
+![Okaeli CategoryCode Admin Field screenshot](doc/images/okaeli-category-code-field.png)
+
 The main purpose of this is to have a unique identifier to manage categories (better than `id` that could be dependent of the environment).
 
 In addition, this extension can add a new handle in the category page layout depending on this unique identifier. This should be used to put the design of a 
