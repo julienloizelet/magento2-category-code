@@ -99,7 +99,7 @@ Then, you could create a `catalog_category_code_modify-me.xml` in the `app/desig
 
 This module comes with one configuration :
 
-  * `Stores > Configuration > Catalog > Catalog > Add category code handle`
+  * `Stores > Configuration > Catalog > Catalog > Storefront > Add category code handle`
 
   This configuration allows you to enable / disable frontend layout update. If `Yes` is selected,
 a new handle depending on the category code (e.g `catalog_category_code_` concatened with the category code in lowercase)

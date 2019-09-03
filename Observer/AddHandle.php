@@ -38,7 +38,7 @@ class AddHandle implements ObserverInterface
     protected $_registry;
 
     /**
-     * @var Data
+     * @var HelperData
      */
     protected $_helper;
 
