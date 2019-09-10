@@ -28,7 +28,7 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
         <section id="catalog">
-            <resource>Okaeli_CategoryCode::categorycode_configuration</resource>
+            <resource>Okaeli_CategoryCode::config</resource>
             <group id="frontend">
                 <field id="okaeli_category_layout_update" translate="label" type="select" sortOrder="1000" showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Add category code handle</label>
