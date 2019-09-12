@@ -26,19 +26,30 @@
 
 namespace Okaeli\CategoryCode\Helper;
 
-use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Store\Model\ScopeInterface;
 use Magento\Framework\App\Helper\AbstractHelper;
 
 class Config extends AbstractHelper
 {
     const XML_PATH_FRONTEND_LAYOUT_UPDATE = 'catalog/frontend/okaeli_category_layout_update';
 
+    /**
+     * Get layout update enabled config
+     *
+     * @var bool
+     */
+    protected $_isLayoutEnabled;
+
     public function isLayoutUpdateEnabled($storeId = null)
     {
-        return $this->scopeConfig->getValue(
-            self::XML_PATH_FRONTEND_LAYOUT_UPDATE,
-            ScopeConfigInterface::SCOPE_TYPE_DEFAULT,
-            $storeId
-        );
+        if ($this->_isLayoutEnabled === null) {
+            $this->_isLayoutEnabled = $this->scopeConfig->getValue(
+                self::XML_PATH_FRONTEND_LAYOUT_UPDATE,
+                ScopeInterface::SCOPE_STORE,
+                $storeId
+            );
+        }
+
+        return $this->_isLayoutEnabled;
     }
 }
