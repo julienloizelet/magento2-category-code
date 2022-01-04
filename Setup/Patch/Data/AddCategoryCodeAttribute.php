@@ -89,6 +89,8 @@ class AddCategoryCodeAttribute implements DataPatchInterface
             $attributeGroup,
             $eavSetup->getAttributeId(Category::ENTITY, HelperData::ATTRIBUTE_CODE)
         );
+
+        return $this;
     }
 
     /**

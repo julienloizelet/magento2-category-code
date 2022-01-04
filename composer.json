@@ -19,7 +19,7 @@
   "keywords": ["magento", "magento2", "extension", "module", "category", "identifier", "attribute"],
   "require": {
     "php": "~7.1.3|~7.2|~7.3|~7.4",
-    "magento/framework": "^102.0"
+    "magento/framework": ">=102.0"
   },
   "require-dev": {
     "magento/marketplace-eqp": "^2.0"
