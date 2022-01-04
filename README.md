@@ -1,15 +1,14 @@
 # Okaeli_CategoryCode
 
+[![Installation and Varnish test suite](https://github.com/julienloizelet/magento2-category-code/actions/workflows/installation-and-varnish-test-suite.yml/badge.svg)](https://github.com/julienloizelet/magento2-category-code/actions/workflows/installation-and-varnish-test-suite.yml)
+
 ----------------------
 
-```
-@category   Okaeli  
-@package    Okaeli_CategoryCode  
-@author     Julien Loizelet <julienloizelet@okaeli.com>  
-@copyright  Copyright (c)  2019 Julien Loizelet  
-@license    GNU GENERAL PUBLIC LICENSE Version 3
-  
-```
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Description
 
@@ -119,8 +118,11 @@ This extension is **0 rewrite**  guaranteed. The following event is listened:
 
 ### Coding Standards
 
-This extension has been checked with the [Magento Extension Quality Program Coding Standard](https://github.com/magento/magento-coding-standard).
-You can find the output of the command `phpcs /path/to/Okaeli/CategoryCode/sources --standard=Magento2` in [this file](doc/coding-standard/magento-eqp.txt).
+[![Static test suite](https://github.com/julienloizelet/magento2-category-code/actions/workflows/static-test-suite.yml/badge.svg)](https://github.com/julienloizelet/magento2-category-code/actions/workflows/static-test-suite.yml)
+
+This extension has been checked with PHPCS, PHPMD and PHPSTAN tools.
+
+
 
 ## Support
 

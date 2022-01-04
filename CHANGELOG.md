@@ -5,6 +5,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 
+## [1.1.7] - 2022-01-04
+
+### Added
+- Add Github actions for quality code and test
+### Changed
+- Minor change for PHPSTAN
 
 ## [1.1.6] - 2021-08-18
 
