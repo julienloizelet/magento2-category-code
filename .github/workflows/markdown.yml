@@ -28,7 +28,6 @@ jobs:
           gem install awesome_bot
           cd extension
           awesome_bot README.md --skip-save-results --base-url http://localhost:8080/
-          awesome_bot doc/*.md --skip-save-results --white-list repo.magento.com,ddev.site --base-url http://localhost:8080/doc/
 
       - name: Generate table of contents
         uses: technote-space/toc-generator@v4

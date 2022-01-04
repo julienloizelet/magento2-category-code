@@ -132,8 +132,8 @@ If you encounter any problems or bugs, please create an issue on
 ## Contribution
 
 Any contribution is highly welcome. The best possibility to provide any code is to open
-a [pull request on GitHub](https://help.github.com/articles/using-pull-requests).
+a [pull request on GitHub](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests).
 
 ## License
 
-[GNU General Public License, version 3 (GPLv3)](http://opensource.org/licenses/gpl-3.0)
+[GNU General Public License, version 3 (GPLv3)](LICENSE)
