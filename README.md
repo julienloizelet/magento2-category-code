@@ -6,7 +6,25 @@
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**
 
+- [Description](#description)
+- [Installation](#installation)
+  - [Requirements](#requirements)
+  - [Installation methods](#installation-methods)
+- [Post Installation](#post-installation)
+  - [Enable the module](#enable-the-module)
+  - [System Upgrade](#system-upgrade)
+  - [Clear Cache](#clear-cache)
+- [Usage](#usage)
+  - [Features](#features)
+  - [Configurations](#configurations)
+- [Technical Notes](#technical-notes)
+  - [No rewrite. Events driven development.](#no-rewrite-events-driven-development)
+  - [Coding Standards](#coding-standards)
+- [Support](#support)
+- [Contribution](#contribution)
+- [License](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
