@@ -31,7 +31,7 @@ use Magento\Framework\App\Helper\AbstractHelper;
 
 class Config extends AbstractHelper
 {
-    const XML_PATH_FRONTEND_LAYOUT_UPDATE = 'catalog/frontend/okaeli_category_layout_update';
+    public const XML_PATH_FRONTEND_LAYOUT_UPDATE = 'catalog/frontend/okaeli_category_layout_update';
 
     /**
      * Get layout update enabled config
@@ -40,7 +40,13 @@ class Config extends AbstractHelper
      */
     protected $_isLayoutEnabled;
 
-    public function isLayoutUpdateEnabled($storeId = null)
+    /**
+     * Retrieve is_layout_enabled configuration value
+     *
+     * @param null|int|string $storeId
+     * @return bool
+     */
+    public function isLayoutUpdateEnabled($storeId = null): bool
     {
         if ($this->_isLayoutEnabled === null) {
             $this->_isLayoutEnabled = $this->scopeConfig->getValue(

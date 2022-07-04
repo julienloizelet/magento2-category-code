@@ -1,9 +1,17 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
-and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+
+## [1.1.8] - 2022-07-05
+
+### Added
+- Add compatibility with Magento `2.4.4`
+- Added Unit and end-to-end tests
+### Changed
+- Minor changes for PHP_CodeSniffer
 
 ## [1.1.7] - 2022-01-04
 

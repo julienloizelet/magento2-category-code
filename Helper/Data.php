@@ -28,6 +28,7 @@ namespace Okaeli\CategoryCode\Helper;
 
 use Magento\Catalog\Model\ResourceModel\Category\CollectionFactory;
 use Magento\Framework\App\Helper\Context;
+use Magento\Catalog\Model\Category;
 
 class Data extends Config
 {
@@ -41,10 +42,14 @@ class Data extends Config
      */
     protected $_categoryByCode = [];
 
-    const ATTRIBUTE_CODE = 'okaeli_category_code';
+    public const ATTRIBUTE_CODE = 'okaeli_category_code';
 
+    /**
+     * @param Context $context
+     * @param CollectionFactory $collecionFactory
+     */
     public function __construct(
-        Context $context,
+        Context           $context,
         CollectionFactory $collecionFactory
     ) {
         $this->_collectionFactory = $collecionFactory;
@@ -53,12 +58,12 @@ class Data extends Config
 
     /**
      * Load a category by code
+     *
      * @param string $categoryCode
      * @param array $attributes
-     * @return mixed
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @return Category
      */
-    public function getCategoryByCode($categoryCode, $attributes = [])
+    public function getCategoryByCode(string $categoryCode, array $attributes = []): Category
     {
         if (!isset($this->_categoryByCode[$categoryCode])) {
             $collection = $this->_collectionFactory

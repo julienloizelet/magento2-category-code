@@ -42,14 +42,24 @@ class AddHandle implements ObserverInterface
      */
     protected $_helper;
 
+    /**
+     * @param Registry $registry
+     * @param HelperData $helper
+     */
     public function __construct(
-        Registry $registry,
+        Registry   $registry,
         HelperData $helper
     ) {
         $this->_registry = $registry;
         $this->_helper = $helper;
     }
 
+    /**
+     * Add specific layout handle
+     *
+     * @param \Magento\Framework\Event\Observer $observer
+     * @return $this|void
+     */
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
         if (!$this->_helper->isLayoutUpdateEnabled()) {
@@ -64,7 +74,7 @@ class AddHandle implements ObserverInterface
         if (!$category) {
             return $this;
         }
-        $categoryCode = trim($category->getData(HelperData::ATTRIBUTE_CODE));
+        $categoryCode = trim((string) $category->getData(HelperData::ATTRIBUTE_CODE));
         if (!empty($categoryCode)) {
             $layout = $observer->getData('layout');
             $layout->getUpdate()->addHandle('catalog_category_code_' . strtolower($categoryCode));

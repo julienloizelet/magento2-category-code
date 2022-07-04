@@ -1,25 +1,32 @@
-name: Static test suite
+name: Coding standards
 on:
   push:
-  pull_request:
     branches:
-      - main
+      - master
+    paths-ignore:
+      - '**.md'
   workflow_dispatch:
 
+permissions:
+  contents: read
 jobs:
   static-test-suite:
     strategy:
       fail-fast: false
       matrix:
-        m2-version: [ 2.3.0, 2.4.3 ]
-        php-version: [7.2, 7.3, 7.4]
+        m2-version: [ "2.3.0", "2.4.3", "2.4.4" ]
+        php-version: [ "7.2", "7.3", "7.4", "8.1" ]
         exclude:
-          - { php-version: 7.4, m2-version: 2.3.0}
-          - { php-version: 7.3, m2-version: 2.3.0}
-          - { php-version: 7.2, m2-version: 2.4.3}
+          - { php-version: "7.4", m2-version: "2.3.0" }
+          - { php-version: "7.3", m2-version: "2.3.0" }
+          - { php-version: "8.1", m2-version: "2.3.0" }
+          - { php-version: "7.2", m2-version: "2.4.3" }
+          - { php-version: "8.1", m2-version: "2.4.3" }
+          - { php-version: "7.2", m2-version: "2.4.4" }
+          - { php-version: "7.3", m2-version: "2.4.4" }
 
     name: Static test suite
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     env:
       EXTENSION_PACKAGE_NAME: "okaeli/magento2-category-code"
 
@@ -31,12 +38,14 @@ jobs:
           repository: julienloizelet/ddev-m2
 
       - name: Install DDEV
+        env:
+          DDEV_VERSION: v1.19.3
         run: |
           # @see https://ddev.readthedocs.io/en/stable/#installationupgrade-script-linux-and-macos-armarm64-and-amd64-architectures
           sudo apt-get -qq update
           sudo apt-get -qq -y install libnss3-tools
           curl -LO https://raw.githubusercontent.com/drud/ddev/master/scripts/install_ddev.sh
-          bash install_ddev.sh
+          bash install_ddev.sh ${{env.DDEV_VERSION}}
           ddev config global --instrumentation-opt-in=false --omit-containers=dba,ddev-ssh-agent
           rm install_ddev.sh
 
@@ -48,17 +57,21 @@ jobs:
 
       - name: Set ELASTIC_INSTALL_STRING env for 2.3
         if: startsWith(matrix.m2-version, '2.3')
-        run: echo "ELASTIC_INSTALL_STRING=''" >> $GITHUB_ENV
+        run: echo "ELASTIC_INSTALL_STRING=" >> $GITHUB_ENV
 
       - name: Set ELASTIC_INSTALL_STRING env for 2.4
         if: startsWith(matrix.m2-version, '2.4')
-        run: echo "ELASTIC_INSTALL_STRING='--elasticsearch-host=elasticsearch'" >> $GITHUB_ENV
+        run: echo "ELASTIC_INSTALL_STRING=--elasticsearch-host=elasticsearch" >> $GITHUB_ENV
 
       - name: Start DDEV for ${{ matrix.m2-version }} with PHP ${{ matrix.php-version }}
         run: |
           cp .ddev/config_overrides/config.${{ env.M2_VERSION_CODE }}.yaml .ddev/config.${{ env.M2_VERSION_CODE }}.yaml
           sed -i -e 's/^php_version:.*/php_version: ${{ matrix.php-version }}/g' .ddev/config.${{ env.M2_VERSION_CODE }}.yaml
           ddev start
+
+      - name: Force allow plugin for 2.4.3
+        if: startsWith(matrix.m2-version, '2.4.3')
+        run: ddev composer config --global allow-plugins true -n
 
       - name: Install Magento ${{ matrix.m2-version }} with PHP ${{ matrix.php-version }}
         # We don't use "ddev composer" create as it restarts all containers

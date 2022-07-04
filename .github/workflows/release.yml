@@ -14,6 +14,8 @@ jobs:
   prepare-release:
     name: Prepare release
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     env:
       EXTENSION_ZIP_NAME: "okaeli-magento2-category-code"
 
@@ -42,6 +44,7 @@ jobs:
           path: ${{ env.VERSION_SOURCES }}
 
       - name: Check version ${{ env.VERSION_NUMBER }} consistency in files
+        # Check composer.json and CHANGELOG.md
         run: |
           cd ${{ env.VERSION_SOURCES }}
           COMPOSER_VERSION=$(grep -E '\"version\": \"(.*)\",'  composer.json | sed 's/ //g')
@@ -65,7 +68,7 @@ jobs:
 
       - name: Create zip
         run: |
-          zip -r ${{ env.VERSION_SOURCES }}.zip ${{ env.VERSION_SOURCES }}/ -x '${{ env.VERSION_SOURCES }}/.git/*' -x '${{ env.VERSION_SOURCES }}/.github/*' -x '${{ env.VERSION_SOURCES }}/.gitignore'
+          zip -r ${{ env.VERSION_SOURCES }}.zip ${{ env.VERSION_SOURCES }}/ -x '${{ env.VERSION_SOURCES }}/.git*'
 
 
       - name: Clone zip validator
