@@ -121,21 +121,24 @@ jobs:
 
       - name: Installation tests
         run: |
+          sudo chmod -R 777 ${{ github.workspace }}
+          ddev magento maintenance:enable
           ddev magento module:enable ${{ env.EXTENSION_NAME }}
+          ddev magento maintenance:disable
           ddev magento setup:upgrade
-          ddev magento setup:di:compile
-          ddev magento setup:static-content:deploy -f
           ddev magento deploy:mode:set production
           ddev magento indexer:reindex
 
       - name: Disable some extensions for 2.4
         if: startsWith(matrix.m2-version, '2.4')
         run: |
+          sudo chmod -R 777 ${{ github.workspace }}
+          ddev magento maintenance:enable
           ddev magento module:disable Magento_TwoFactorAuth
+          ddev magento maintenance:disable
 
       - name: Prepare for Varnish tests
         run: |
-          ddev magento setup:di:compile
           ddev magento config:set system/full_page_cache/caching_application 2
           ddev magento setup:performance:generate-fixtures ./varnish-profile.xml
 

@@ -73,6 +73,7 @@ const onAdminGoToSettingsPage = async (direct = true) => {
 const onAdminSaveSettings = async (successExpected = true) => {
     await page.click("#save");
     await page.waitForLoadState("networkidle");
+    await wait(1500);
     if (successExpected) {
         await expect(page).toMatchText("#messages", /You saved/);
     }
@@ -89,6 +90,7 @@ const setDefaultConfig = async (save = true, direct = true) => {
     await wait(1500);
     // Enable layout update
     await selectElement("catalog_frontend_okaeli_category_layout_update", "1");
+    await wait(1500);
     if (save) {
         await onAdminSaveSettings();
     }

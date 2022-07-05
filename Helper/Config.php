@@ -34,8 +34,6 @@ class Config extends AbstractHelper
     public const XML_PATH_FRONTEND_LAYOUT_UPDATE = 'catalog/frontend/okaeli_category_layout_update';
 
     /**
-     * Get layout update enabled config
-     *
      * @var bool
      */
     protected $_isLayoutEnabled;
