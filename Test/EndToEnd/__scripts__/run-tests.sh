@@ -56,7 +56,7 @@ case $TYPE in
     COMMAND="yarn --cwd ${YARN_PATH} cross-env"
     TIMEOUT=31000
     HEADLESS=false
-    SLOWMO=150
+    SLOWMO=300
     ;;
 
   "docker")
@@ -74,7 +74,7 @@ case $TYPE in
     COMMAND="ddev exec -s playwright xvfb-run --auto-servernum -- yarn --cwd ${YARN_PATH} cross-env"
     TIMEOUT=60000
     HEADLESS=true
-    SLOWMO=0
+    SLOWMO=150
     ;;
 
   *)
