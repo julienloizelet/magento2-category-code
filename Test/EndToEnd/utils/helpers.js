@@ -38,7 +38,7 @@ const goToPublicPage = async (endpoint = "") => {
 };
 
 const ensureConfigVisibilty = async () => {
-    let visible = await page.isVisible("#catalog_frontend-head");
+    let visible = await page.isVisible("#catalog_frontend");
     if (!visible) {
         await page.click("#catalog_frontend-head");
         await wait(1500);
