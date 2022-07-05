@@ -2,12 +2,9 @@
 
 [![Installation and Varnish test suite](https://github.com/julienloizelet/magento2-category-code/actions/workflows/installation-and-varnish-test-suite.yml/badge.svg)](https://github.com/julienloizelet/magento2-category-code/actions/workflows/installation-and-varnish-test-suite.yml)
 [![Static test suite](https://github.com/julienloizelet/magento2-category-code/actions/workflows/static-test-suite.yml/badge.svg)](https://github.com/julienloizelet/magento2-category-code/actions/workflows/static-test-suite.yml)
+[![End-to-End test suite](https://github.com/julienloizelet/magento2-category-code/actions/workflows/end-to-end-test-suite.yml/badge.svg)](https://github.com/julienloizelet/magento2-category-code/actions/workflows/end-to-end-test-suite.yml)
 
 ----------------------
-
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Usage
 
