@@ -8,6 +8,15 @@
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**
+
+- [Requirements](#requirements)
+- [Installation methods](#installation-methods)
+- [Post Installation](#post-installation)
+  - [Enable the module](#enable-the-module)
+  - [System Upgrade](#system-upgrade)
+  - [Clear Cache](#clear-cache)
+
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 

@@ -5,6 +5,23 @@
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**
+
+- [Local development](#local-development)
+  - [DDEV-Local setup](#ddev-local-setup)
+    - [DDEV installation](#ddev-installation)
+    - [DDEV Magento 2 environment](#ddev-magento-2-environment)
+    - [Magento 2 installation](#magento-2-installation)
+    - [Set up Magento 2](#set-up-magento-2)
+    - [Configure Magento 2 for local development](#configure-magento-2-for-local-development)
+    - [Okaeli CategoryCode extension installation](#okaeli-categorycode-extension-installation)
+  - [Extension quality](#extension-quality)
+  - [Unit tests](#unit-tests)
+  - [End-to-end tests](#end-to-end-tests)
+- [Commit message](#commit-message)
+  - [Allowed message `type` values](#allowed-message-type-values)
+- [Release process](#release-process)
+
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ### Local development
