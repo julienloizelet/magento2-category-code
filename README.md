@@ -11,20 +11,20 @@
 
 ## Usage
 
-See [User Guide](https://github.com/julienloizelet/magento2-category-code/blob/main/doc/USER_GUIDE.md)
+See [User Guide](https://github.com/julienloizelet/magento2-category-code/blob/master/doc/USER_GUIDE.md)
 
 ## Installation
 
-See [Installation Guide](https://github.com/julienloizelet/magento2-category-code/main/doc/INSTALLATION_GUIDE.md)
+See [Installation Guide](https://github.com/julienloizelet/magento2-category-code/blob/master/doc/INSTALLATION_GUIDE.md)
 
 
 ## Technical notes
 
-See [Technical notes](https://github.com/julienloizelet/magento2-category-code/main/doc/TECHNICAL_NOTES.md)
+See [Technical notes](https://github.com/julienloizelet/magento2-category-code/blob/master/doc/TECHNICAL_NOTES.md)
 
 ## Developer guide
 
-See [Developer guide](https://github.com/julienloizelet/magento2-category-code/blob/main/doc/DEVELOPER.md)
+See [Developer guide](https://github.com/julienloizelet/magento2-category-code/blob/master/doc/DEVELOPER.md)
 
 
 ## Support
@@ -39,4 +39,4 @@ a [pull request on GitHub](https://docs.github.com/en/pull-requests/collaboratin
 
 ## License
 
-[GNU General Public License, version 3 (GPLv3)](https://github.com/julienloizelet/magento2-category-code/blob/main/LICENSE)
+[GNU General Public License, version 3 (GPLv3)](https://github.com/julienloizelet/magento2-category-code/blob/master/LICENSE)
