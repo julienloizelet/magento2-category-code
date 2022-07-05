@@ -73,6 +73,7 @@ const onAdminGoToSettingsPage = async (direct = true) => {
 
 const onAdminSaveSettings = async (successExpected = true) => {
     await page.click("#save");
+    await page.waitForLoadState("networkidle");
     await wait(3000);
     if (successExpected) {
         await expect(page).toMatchText("#messages", /You saved/);
