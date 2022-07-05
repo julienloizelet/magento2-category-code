@@ -49,7 +49,7 @@ class Config extends AbstractHelper
     public function isLayoutUpdateEnabled($storeId = null): bool
     {
         if ($this->_isLayoutEnabled === null) {
-            $this->_isLayoutEnabled = $this->scopeConfig->getValue(
+            $this->_isLayoutEnabled = (bool) $this->scopeConfig->getValue(
                 self::XML_PATH_FRONTEND_LAYOUT_UPDATE,
                 ScopeInterface::SCOPE_STORE,
                 $storeId
