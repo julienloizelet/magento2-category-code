@@ -1,4 +1,4 @@
-# Okaeli CategoryCode extension for Magento 2
+# Okaeli_CategoryCode extension for Magento 2
 
 [![Installation and Varnish test suite](https://github.com/julienloizelet/magento2-category-code/actions/workflows/installation-and-varnish-test-suite.yml/badge.svg)](https://github.com/julienloizelet/magento2-category-code/actions/workflows/installation-and-varnish-test-suite.yml)
 [![Static test suite](https://github.com/julienloizelet/magento2-category-code/actions/workflows/static-test-suite.yml/badge.svg)](https://github.com/julienloizelet/magento2-category-code/actions/workflows/static-test-suite.yml)
