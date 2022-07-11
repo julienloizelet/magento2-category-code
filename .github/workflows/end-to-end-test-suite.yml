@@ -20,8 +20,16 @@ jobs:
                 exclude:
                     - { php-version: "7.2", m2-version: "2.3.7" }
                     - { php-version: "8.1", m2-version: "2.3.7" }
+                    - { php-version: "7.2", m2-version: "2.4.0" }
+                    - { php-version: "8.1", m2-version: "2.4.0" }
+                    - { php-version: "7.2", m2-version: "2.4.1" }
+                    - { php-version: "8.1", m2-version: "2.4.1" }
+                    - { php-version: "7.2", m2-version: "2.4.2" }
+                    - { php-version: "8.1", m2-version: "2.4.2" }
+                    - { php-version: "7.2", m2-version: "2.4.3" }
+                    - { php-version: "8.1", m2-version: "2.4.3" }
                     - { php-version: "7.2", m2-version: "2.4.4" }
-                    - { php-version: "7.4", m2-version: "2.4.4" }
+                    - { php-version: "7.3", m2-version: "2.4.4" }
 
         name: End-to-end test suite
         if: ${{ !contains(github.event.head_commit.message, 'chore(') }}
@@ -79,7 +87,7 @@ jobs:
                     ddev exec php -v
 
             -   name: Force allow plugin for 2.4.3
-                if: contains(fromJson('["2.3.7","2.4.0","2.4.1","2.4.2","2.4.3"]'),matrix.m2-version)
+                if: contains(fromJson('["2.3.7","2.4.2","2.4.3"]'),matrix.m2-version)
                 run: ddev composer config --global allow-plugins true -n
 
             -   name: Install Magento ${{ matrix.m2-version }} with PHP ${{ matrix.php-version }}

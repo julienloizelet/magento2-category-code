@@ -73,7 +73,7 @@ jobs:
           ddev start
 
       - name: Force allow plugin for some Magento 2 versions
-        if: contains(fromJson('["2.3.7", "2.4.0"]'),matrix.m2-version)
+        if: contains(fromJson('["2.3.7"]'),matrix.m2-version)
         run: ddev composer config --global allow-plugins true -n
 
       - name: Install Magento ${{ matrix.m2-version }} with PHP ${{ matrix.php-version }}
