@@ -14,8 +14,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        m2-version: [ "2.4.4" ]
-        php-version: [ "8.1" ]
+        m2-version: [ "2.3.7", "2.4.4" ]
+        php-version: [ "7.4", "8.1" ]
+        exclude:
+          - { php-version: "8.1", m2-version: "2.3.7" }
+          - { php-version: "7.4", m2-version: "2.4.4" }
 
     name: Unit and integration tests
     runs-on: ubuntu-latest
@@ -48,6 +51,10 @@ jobs:
         run: |
            echo "M2_VERSION_CODE=$(echo m${{ matrix.m2-version }} | sed 's/\.//g' )" >> $GITHUB_ENV
 
+      - name: Set ELASTIC_INSTALL_STRING env for 2.3
+        if: startsWith(matrix.m2-version, '2.3')
+        run: echo "ELASTIC_INSTALL_STRING=" >> $GITHUB_ENV
+
       - name: Set ELASTIC_INSTALL_STRING env for 2.4
         if: startsWith(matrix.m2-version, '2.4')
         run: echo "ELASTIC_INSTALL_STRING=--elasticsearch-host=elasticsearch" >> $GITHUB_ENV
@@ -58,6 +65,9 @@ jobs:
           sed -i -e 's/^php_version:.*/php_version: ${{ matrix.php-version }}/g' .ddev/config.${{ env.M2_VERSION_CODE }}.yaml
           ddev start
 
+      - name: Force allow plugin for 2.3.7
+        if: startsWith(matrix.m2-version, '2.3.7')
+        run: ddev composer config --global allow-plugins true -n
 
       - name: Install Magento ${{ matrix.m2-version }} with PHP ${{ matrix.php-version }}
         # We don't use "ddev composer" create as it restarts all containers
