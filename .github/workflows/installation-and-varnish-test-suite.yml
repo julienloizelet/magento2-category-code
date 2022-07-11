@@ -125,10 +125,12 @@ jobs:
           sudo chmod -R 777 ${{ github.workspace }}
           ddev magento maintenance:enable
           ddev magento module:enable ${{ env.EXTENSION_NAME }}
-          ddev magento maintenance:disable
           ddev magento setup:upgrade
+          ddev magento setup:di:compile
+          ddev magento setup:static-content:deploy
           ddev magento deploy:mode:set production
           ddev magento indexer:reindex
+          ddev magento maintenance:disable
 
       - name: Disable some extensions for 2.4
         if: startsWith(matrix.m2-version, '2.4')
