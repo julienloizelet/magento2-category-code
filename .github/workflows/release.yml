@@ -4,10 +4,15 @@ on:
   workflow_dispatch:
     inputs:
       tag_name:
-        default: ""
+        type: string
+        required: true
       draft:
-        default: true
+        type: boolean
+        description: Draft release
+        default: false
       prerelease:
+        type: boolean
+        description: Prerelease
         default: false
 
 jobs:
