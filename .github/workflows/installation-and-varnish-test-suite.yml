@@ -15,11 +15,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        m2-version: [ "2.3.7", "2.4.4" ]
+        # Last one for the current and previous minor, greatest php version
+        m2-version: [ "2.3.7", "2.4.5" ]
         php-version: [ "7.4", "8.1" ]
         exclude:
           - { php-version: "8.1", m2-version: "2.3.7" }
-          - { php-version: "7.4", m2-version: "2.4.4" }
+          - { php-version: "7.4", m2-version: "2.4.5" }
 
 
     name: Installation and Varnish test suite
@@ -40,7 +41,7 @@ jobs:
 
       - name: Install DDEV
         env:
-          DDEV_VERSION: v1.19.3
+          DDEV_VERSION: v1.20.0
         run: |
           # @see https://ddev.readthedocs.io/en/stable/#installationupgrade-script-linux-and-macos-armarm64-and-amd64-architectures
           sudo apt-get -qq update

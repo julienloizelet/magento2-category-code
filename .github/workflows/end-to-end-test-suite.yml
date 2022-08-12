@@ -15,21 +15,14 @@ jobs:
         strategy:
             fail-fast: false
             matrix:
-                m2-version: [ "2.3.7", "2.4.0", "2.4.1", "2.4.2", "2.4.3", "2.4.4" ]
-                php-version: [ "7.2", "7.3", "7.4", "8.1" ]
-                exclude:
-                    - { php-version: "7.2", m2-version: "2.3.7" }
-                    - { php-version: "8.1", m2-version: "2.3.7" }
-                    - { php-version: "7.2", m2-version: "2.4.0" }
-                    - { php-version: "8.1", m2-version: "2.4.0" }
-                    - { php-version: "7.2", m2-version: "2.4.1" }
-                    - { php-version: "8.1", m2-version: "2.4.1" }
-                    - { php-version: "7.2", m2-version: "2.4.2" }
-                    - { php-version: "8.1", m2-version: "2.4.2" }
-                    - { php-version: "7.2", m2-version: "2.4.3" }
-                    - { php-version: "8.1", m2-version: "2.4.3" }
-                    - { php-version: "7.2", m2-version: "2.4.4" }
-                    - { php-version: "7.3", m2-version: "2.4.4" }
+              # Last 2 patches for the current minor, and last one for the previous minor, greatest php version
+              m2-version: [ "2.3.7", "2.4.4", "2.4.5" ]
+              php-version: [ "7.4", "8.1" ]
+              exclude:
+                - { php-version: "8.1", m2-version: "2.3.7" }
+                - { php-version: "7.4", m2-version: "2.4.4" }
+                - { php-version: "7.4", m2-version: "2.4.5" }
+
 
         name: End-to-end test suite
         if: ${{ !contains(github.event.head_commit.message, 'chore(') }}
@@ -49,7 +42,7 @@ jobs:
 
             -   name: Install DDEV
                 env:
-                    DDEV_VERSION: v1.19.3
+                    DDEV_VERSION: v1.20.0
                 run: |
                     # @see https://ddev.readthedocs.io/en/stable/#installationupgrade-script-linux-and-macos-armarm64-and-amd64-architectures
                     sudo apt-get -qq update
