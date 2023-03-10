@@ -8,7 +8,7 @@
 **Table of Contents**
 
 - [Local development](#local-development)
-  - [DDEV-Local setup](#ddev-local-setup)
+  - [DDEV setup](#ddev-local-setup)
     - [DDEV installation](#ddev-installation)
     - [DDEV Magento 2 environment](#ddev-magento-2-environment)
     - [Magento 2 installation](#magento-2-installation)
@@ -28,12 +28,12 @@
 
 There are many ways to install this extension on a local Magento 2 environment.
 
-We are using [DDEV-Local](https://ddev.readthedocs.io/en/stable/) because it is quite simple to use and customize.
+We are using [DDEV](https://ddev.readthedocs.io/en/stable/) because it is quite simple to use and customize.
 
 You may use your own local stack, but we provide here some useful tools that depends on DDEV.
 
 
-#### DDEV-Local setup
+#### DDEV setup
 
 For a quick start, follow the below steps.
 
@@ -42,16 +42,8 @@ release._
 
 ##### DDEV installation
 
-This project is fully compatible with DDEV 1.19.3 and it is recommended to use this specific version.
-For the DDEV installation, please follow the [official instructions](https://ddev.readthedocs.io/en/stable/#installation).
-On a Linux distribution, you can run:
-```
-sudo apt-get -qq update
-sudo apt-get -qq -y install libnss3-tools
-curl -LO https://raw.githubusercontent.com/drud/ddev/master/scripts/install_ddev.sh
-bash install_ddev.sh v1.19.3
-rm install_ddev.sh
-```
+This project is fully compatible with DDEV 1.21.5, and it is recommended to use this specific version. For the DDEV 
+installation, please follow the [official instructions](https://ddev.readthedocs.io/en/stable/#installation).
 
 
 ##### DDEV Magento 2 environment
