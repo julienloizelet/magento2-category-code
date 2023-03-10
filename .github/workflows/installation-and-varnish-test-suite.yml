@@ -57,33 +57,35 @@ jobs:
           ddev composer require ${{ env.EXTENSION_PACKAGE_NAME }}:@dev --no-interaction
 
       - name: Installation tests
+        # chmod 777 to minimize chance to get the following error:
+        # The directory "/var/www/html/generated/code" cannot be deleted Warning!rmdir(/var/www/html/generated/code): Directory not empty
         run: |
           sudo chmod -R 777 ${{ github.workspace }}
+          rm -Rf ${{ github.workspace }}/generated
           ddev magento maintenance:enable
           ddev magento module:enable ${{ env.EXTENSION_NAME }}
+          ddev magento maintenance:disable
           ddev magento setup:upgrade
-          ddev magento setup:di:compile
-          ddev magento setup:static-content:deploy -f
           ddev magento deploy:mode:set production
           ddev magento indexer:reindex
-          ddev magento maintenance:disable
-
-      - name: Disable some extensions for 2.4
-        if: startsWith(matrix.m2-version, '2.4')
-        run: |
-          sudo chmod -R 777 ${{ github.workspace }}
-          ddev magento maintenance:enable
-          ddev magento module:disable Magento_TwoFactorAuth
-          ddev magento maintenance:disable
 
       - name: Prepare for Varnish tests
         run: |
           ddev magento config:set system/full_page_cache/caching_application 2
           ddev magento setup:performance:generate-fixtures ./varnish-profile.xml
 
+      - name: Disable some extensions for 2.4
+        if: startsWith(matrix.m2-version, '2.4')
+        run: |
+          ddev magento maintenance:enable
+          ddev magento module:disable --clear-static-content  Magento_TwoFactorAuth
+          ddev magento cache:clean
+          ddev magento cache:flush
+          ddev magento setup:static-content:deploy -f
+          ddev magento maintenance:disable
+
       - name: Varnish MISS and HIT test
         run: |
-          ddev magento cache:flush
           VERIF=$(ddev exec curl -sSL -D - https://${{ env.M2_VERSION_CODE }}.ddev.site/simple-product-1.html | grep -E "^x-eqp-cache:" | sed 's/ //g')
           if [[ $VERIF != *"x-eqp-cache:MISS"* ]]
           then
