@@ -30,7 +30,7 @@ const selectByName = async (selectName, valueToSelect) => {
 };
 
 const goToAdmin = async (endpoint = "") => {
-    await page.goto(`${ADMIN_URL}${endpoint}`, { waitUntil: "networkidle" });
+    await page.goto(`${ADMIN_URL}${endpoint}`);
 };
 
 const goToPublicPage = async (endpoint = "") => {
@@ -49,31 +49,25 @@ const ensureConfigVisibilty = async () => {
 
 const onAdminGoToSettingsPage = async (direct = true) => {
     if (direct) {
-        await page.goto(
-            `${ADMIN_URL}admin/system_config/edit/section/catalog/`,
-            {
-                waitUntil: "networkidle",
-            },
-        );
+        await page.goto(`${ADMIN_URL}admin/system_config/edit/section/catalog/`);
     } else {
+        await wait(1000);
         await page.click("#menu-magento-backend-stores > a");
-        await page.waitForLoadState("networkidle");
+        await wait(1000);
         await page.click(
             '#menu-magento-backend-stores .item-system-config:has-text("Configuration") ',
         );
-        await page.waitForLoadState("networkidle");
-        await wait(3000);
+        await wait(1000);
         await page.click(
             '#system_config_tabs .config-nav-block:has-text("Catalog")',
         );
-        await wait(1500);
+        await wait(1000);
         await page.click('.config-nav-block li:has-text("Catalog")');
     }
 };
 
 const onAdminSaveSettings = async (successExpected = true) => {
     await page.click("#save");
-    await page.waitForLoadState("networkidle");
     await wait(3000);
     if (successExpected) {
         await expect(page).toMatchText("#messages", /You saved/);
@@ -99,6 +93,7 @@ const setDefaultConfig = async (save = true, direct = true) => {
 
 const setDefaultCategoryCode = async (code = CATEGORY_CODE_1) => {
     await goToAdmin("catalog/category/edit/id/3/");
+    await wait(1500);
     await fillByName("okaeli_category_code", code);
     await onAdminSaveSettings();
 };
@@ -106,15 +101,12 @@ const setDefaultCategoryCode = async (code = CATEGORY_CODE_1) => {
 const flushCache = async () => {
     await goToAdmin();
     await page.click("#menu-magento-backend-system > a");
-    await page.waitForLoadState("networkidle");
 
     await page.click(
         '#menu-magento-backend-system .item-system-cache:has-text("Cache Management") ',
     );
-    await page.waitForLoadState("networkidle");
     await expect(page).toMatchTitle(/Cache Management/);
     await page.click("#flush_magento");
-    await page.waitForLoadState("networkidle");
     await expect(page).toMatchText(
         "#messages",
         "The Magento cache storage has been flushed.",
@@ -125,12 +117,16 @@ const onLoginPageLoginAsAdmin = async () => {
     await page.fill("#username", ADMIN_LOGIN);
     await page.fill("#login", ADMIN_PASSWORD);
     await page.click(".action-login");
-    await page.waitForLoadState("networkidle");
     // On first login only, there is a modal to allow admin usage statistics
-    adminUsage = await page.isVisible(".admin-usage-notification");
-    if (adminUsage) {
+    try {
+        await page.waitForSelector(
+            ".admin-usage-notification .action-secondary",
+            { timeout: 3000 },
+        );
+        console.debug("Admin usage notification popup appears.");
         await page.click(".admin-usage-notification .action-secondary");
-        await page.waitForLoadState("networkidle");
+    } catch (error) {
+        console.debug("Admin usage notification popup didn't appear.");
     }
 
     await expect(page).toMatchTitle(/Dashboard/);
