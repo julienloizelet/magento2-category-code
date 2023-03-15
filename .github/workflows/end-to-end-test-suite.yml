@@ -1,110 +1,114 @@
 name: End-to-end tests
 on:
-    push:
-        branches:
-            - master
-        paths-ignore:
-            - '**.md'
-    workflow_dispatch:
+  push:
+    branches:
+      - master
+    paths-ignore:
+      - '**.md'
+  workflow_dispatch:
 
 permissions:
-    contents: read
+  contents: read
 
 jobs:
-    end-to-end-test-suite:
-        strategy:
-            fail-fast: false
-            matrix:
-              # Last 2 patches for the current minor, and last one for the previous minor, greatest php version
-              include:
-                - m2-version: '2.3.7-p4'
-                  php-version: '7.4'
-                - m2-version: '2.4.5'
-                  php-version: '8.1'
-                - m2-version: '2.4.6'
-                  php-version: '8.2'
+  end-to-end-test-suite:
+    strategy:
+      fail-fast: false
+      matrix:
+        # Last 2 patches for the current minor, and last one for the previous minor, greatest php version
+        include:
+          - m2-version: '2.3.7-p4'
+            php-version: '7.4'
+          - m2-version: '2.4.5'
+            php-version: '8.1'
+          - m2-version: '2.4.6'
+            php-version: '8.2'
 
-        name: End-to-end test suite
-        if: ${{ !contains(github.event.head_commit.message, 'chore(') }}
-        runs-on: ubuntu-latest
-        env:
-            EXTENSION_PACKAGE_NAME: "okaeli/magento2-category-code"
-            EXTENSION_NAME: "Okaeli_CategoryCode"
-            EXTENSION_PATH: "category-code"
+    name: End-to-end test suite
+    if: ${{ !contains(github.event.head_commit.message, 'chore(') }}
+    runs-on: ubuntu-latest
+    env:
+      EXTENSION_PACKAGE_NAME: "okaeli/magento2-category-code"
+      EXTENSION_NAME: "Okaeli_CategoryCode"
+      EXTENSION_PATH: "category-code"
 
-        steps:
+    steps:
 
-            - name: Install Magento 2
-              uses: julienloizelet/magento2-ddev-installation@v2.0.0
-              with:
-                php_version: ${{ matrix.php-version }}
-                magento_version: ${{ matrix.m2-version }}
-                composer_auth: ${{ secrets.M2_COMPOSER_AUTH }}
-                magento_repository: "https://repo.magento.com/"
+      - name: Install Magento 2
+        uses: julienloizelet/magento2-ddev-installation@v2.0.0
+        with:
+          php_version: ${{ matrix.php-version }}
+          magento_version: ${{ matrix.m2-version }}
+          composer_auth: ${{ secrets.M2_COMPOSER_AUTH }}
+          magento_repository: "https://repo.magento.com/"
 
-            -   name: Add playwright to DDEV
-                run: |
-                    ddev get julienloizelet/ddev-playwright
-                    cp .ddev/okaeli-add-on/magento2/custom_files/varnish-profile.xml varnish-profile.xml
-                    ddev restart
+      - name: Add playwright to DDEV
+        run: |
+          ddev get julienloizelet/ddev-playwright
+          cp .ddev/okaeli-add-on/magento2/custom_files/varnish-profile.xml varnish-profile.xml
+          ddev restart
 
-            -   name: Clone M2 ${{ env.EXTENSION_NAME }} files
-                uses: actions/checkout@v3
-                with:
-                    path: my-own-modules/${{ env.EXTENSION_PATH }}
+      - name: Clone M2 ${{ env.EXTENSION_NAME }} files
+        uses: actions/checkout@v3
+        with:
+          path: my-own-modules/${{ env.EXTENSION_PATH }}
 
-            -   name: Validate composer.json
-                run: ddev composer validate --working-dir ./my-own-modules/${{ env.EXTENSION_PATH }}
+      - name: Validate composer.json
+        run: ddev composer validate --working-dir ./my-own-modules/${{ env.EXTENSION_PATH }}
 
-            -   name: Prepare composer repositories
-                run: |
-                    ddev composer config --unset repositories.0
-                    ddev composer config repositories.0 '{"type": "path", "url":"my-own-modules/${{ env.EXTENSION_PATH }}/",  "canonical": true}'
-                    ddev composer config repositories.1 '{"type": "composer", "url":"https://repo.magento.com/",  "exclude": ["${{ env.EXTENSION_PACKAGE_NAME }}"]}'
-                    cat composer.json
+      - name: Prepare composer repositories
+        run: |
+          ddev composer config --unset repositories.0
+          ddev composer config repositories.0 '{"type": "path", "url":"my-own-modules/${{ env.EXTENSION_PATH }}/",  "canonical": true}'
+          ddev composer config repositories.1 '{"type": "composer", "url":"https://repo.magento.com/",  "exclude": ["${{ env.EXTENSION_PACKAGE_NAME }}"]}'
+          cat composer.json
 
-            -   name: Add ${{ env.EXTENSION_NAME }} as composer dependency
-                run: |
-                    ddev composer require ${{ env.EXTENSION_PACKAGE_NAME }}:@dev --no-interaction
+      - name: Add ${{ env.EXTENSION_NAME }} as composer dependency
+        run: |
+          ddev composer require ${{ env.EXTENSION_PACKAGE_NAME }}:@dev --no-interaction
 
-            -   name: Disable some extensions for 2.4
-                if: startsWith(matrix.m2-version, '2.4')
-                run: |
-                    ddev magento module:disable Magento_TwoFactorAuth
-                    ddev magento module:disable Magento_AdminNotification
+      - name: Disable some extensions for 2.4.6
+        if: startsWith(matrix.m2-version, '2.4.6')
+        run: ddev magento module:disable Magento_AdminAdobeImsTwoFactorAuth
 
-            -   name: Make some workaround for some M2 versions
-                if: contains(fromJson('["2.3.7"]'),matrix.m2-version)
-                run: |
-                    ddev magento  module:disable Dotdigitalgroup_Chat
-                    ddev magento  module:disable Dotdigitalgroup_Email
+      - name: Disable some extensions for 2.4
+        if: startsWith(matrix.m2-version, '2.4')
+        run: |
+          ddev magento module:disable Magento_TwoFactorAuth
+          ddev magento module:disable Magento_AdminNotification
 
-            -   name: Enable extension
-                run: |
-                    ddev magento deploy:mode:set developer
-                    ddev magento module:enable ${{ env.EXTENSION_NAME }}
-                    ddev magento setup:upgrade
-                    ddev magento setup:static-content:deploy -f
-                    ddev magento cache:flush
+      - name: Make some workaround for some M2 versions
+        if: contains(fromJson('["2.3.7"]'),matrix.m2-version)
+        run: |
+          ddev magento  module:disable Dotdigitalgroup_Chat
+          ddev magento  module:disable Dotdigitalgroup_Email
 
-            -   name: Prepare for playwright test
-                run: |
-                    ddev magento setup:performance:generate-fixtures ./varnish-profile.xml
-                    cd ${{ github.workspace }}/my-own-modules/${{ env.EXTENSION_PATH }}
-                    mkdir -p view/frontend/layout
-                    cp Test/EndToEnd/layout-update-test-file/catalog_category_code_test_code_1.xml.dist view/frontend/layout/catalog_category_code_test_code_1.xml
-                    ddev magento cache:flush
-                    cd ${{ github.workspace }}/my-own-modules/${{ env.EXTENSION_PATH }}/Test/EndToEnd/__scripts__
-                    chmod +x test-init.sh
-                    ./test-init.sh
-                    chmod +x run-tests.sh
+      - name: Enable extension
+        run: |
+          ddev magento deploy:mode:set developer
+          ddev magento module:enable ${{ env.EXTENSION_NAME }}
+          ddev magento setup:upgrade
+          ddev magento setup:static-content:deploy -f
+          ddev magento cache:flush
 
-            -   name: Config test
-                run: |
-                    cd ${{ github.workspace }}/my-own-modules/${{ env.EXTENSION_PATH }}/Test/EndToEnd/__scripts__
-                    ./run-tests.sh ci "./__tests__/1-config.js"
+      - name: Prepare for playwright test
+        run: |
+          ddev magento setup:performance:generate-fixtures ./varnish-profile.xml
+          cd ${{ github.workspace }}/my-own-modules/${{ env.EXTENSION_PATH }}
+          mkdir -p view/frontend/layout
+          cp Test/EndToEnd/layout-update-test-file/catalog_category_code_test_code_1.xml.dist view/frontend/layout/catalog_category_code_test_code_1.xml
+          ddev magento cache:flush
+          cd ${{ github.workspace }}/my-own-modules/${{ env.EXTENSION_PATH }}/Test/EndToEnd/__scripts__
+          chmod +x test-init.sh
+          ./test-init.sh
+          chmod +x run-tests.sh
 
-            -   name: Update layout handle test
-                run: |
-                    cd ${{ github.workspace }}/my-own-modules/${{ env.EXTENSION_PATH }}/Test/EndToEnd/__scripts__
-                    ./run-tests.sh ci "./__tests__/2-handle-update.js"
+      - name: Config test
+        run: |
+          cd ${{ github.workspace }}/my-own-modules/${{ env.EXTENSION_PATH }}/Test/EndToEnd/__scripts__
+          ./run-tests.sh ci "./__tests__/1-config.js"
+
+      - name: Update layout handle test
+        run: |
+          cd ${{ github.workspace }}/my-own-modules/${{ env.EXTENSION_PATH }}/Test/EndToEnd/__scripts__
+          ./run-tests.sh ci "./__tests__/2-handle-update.js"
