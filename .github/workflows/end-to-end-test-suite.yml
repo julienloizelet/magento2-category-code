@@ -10,6 +10,10 @@ on:
 permissions:
   contents: read
 
+env:
+  # Allow ddev get to use a GitHub token to prevent rate limiting by tests
+  DDEV_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 jobs:
   end-to-end-test-suite:
     strategy:
@@ -104,11 +108,13 @@ jobs:
           chmod +x run-tests.sh
 
       - name: Config test
-        run: |
-          cd ${{ github.workspace }}/my-own-modules/${{ env.EXTENSION_PATH }}/Test/EndToEnd/__scripts__
-          ./run-tests.sh ci "./__tests__/1-config.js"
+        uses: ./my-own-modules/category-code/.github/workflows/end-to-end/run-single-test
+        with:
+          test_path: ${{ github.workspace }}/my-own-modules/${{ env.EXTENSION_PATH }}/Test/EndToEnd
+          file_path: 1-config.js
 
       - name: Update layout handle test
-        run: |
-          cd ${{ github.workspace }}/my-own-modules/${{ env.EXTENSION_PATH }}/Test/EndToEnd/__scripts__
-          ./run-tests.sh ci "./__tests__/2-handle-update.js"
+        uses: ./my-own-modules/category-code/.github/workflows/end-to-end/run-single-test
+        with:
+          test_path: ${{ github.workspace }}/my-own-modules/${{ env.EXTENSION_PATH }}/Test/EndToEnd
+          file_path: 2-handle-update.js
