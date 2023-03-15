@@ -44,8 +44,8 @@ jobs:
 
             -   name: Add playwright to DDEV
                 run: |
-                    cp .ddev/additional_docker_compose/docker-compose.playwright-alone.yaml .ddev/docker-compose.playwright.yaml
-                    cp .ddev/custom_files/varnish-profile.xml varnish-profile.xml
+                    ddev get julienloizelet/ddev-playwright
+                    cp .ddev/okaeli-add-on/magento2/custom_files/varnish-profile.xml varnish-profile.xml
                     ddev restart
 
             -   name: Clone M2 ${{ env.EXTENSION_NAME }} files

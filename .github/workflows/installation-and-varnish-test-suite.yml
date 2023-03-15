@@ -74,6 +74,14 @@ jobs:
           ddev magento config:set system/full_page_cache/caching_application 2
           ddev magento setup:performance:generate-fixtures ./varnish-profile.xml
 
+      - name: Disable some extensions for 2.4.6
+        if: startsWith(matrix.m2-version, '2.4.6')
+        run: |
+          ddev magento maintenance:enable
+          ddev magento module:disable --clear-static-content Magento_AdminAdobeImsTwoFactorAuth
+          ddev magento setup:static-content:deploy -f
+          ddev magento maintenance:disable
+
       - name: Disable some extensions for 2.4
         if: startsWith(matrix.m2-version, '2.4')
         run: |
@@ -173,7 +181,7 @@ jobs:
 
       - name: Varnish product update test
         run: |
-          cp .ddev/custom_scripts/update-product-price.sh update-product-price.sh
+          cp .ddev/okaeli-add-on/magento2/custom_scripts/update-product-price.sh update-product-price.sh
           chmod +x update-product-price.sh
           ddev exec ./update-product-price.sh https://${{ env.M2_VERSION_CODE }}.ddev.site product_dynamic_1
           ddev exec ./update-product-price.sh https://${{ env.M2_VERSION_CODE }}.ddev.site product_dynamic_2
