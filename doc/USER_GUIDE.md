@@ -44,14 +44,14 @@ specific category in your Version Control System tool (e.g by modifying a xml fi
 For example, suppose that you need to remove the title of the category page **only** for the category having the code `modify_me`.
 Then, you could create a `catalog_category_code_modify_me.xml` in the `app/design/frontend/MyCompany/MyTheme/Magento_Catalog/layout` folder with the following content :
 
+```xml
     <?xml version="1.0"?>
-    <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <page xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
         <body>
             <referenceBlock name="page.main.title" remove="true"/>
         </body>
     </page>
-
-
+```
 #### Configurations
 
 This module comes with one configuration :
