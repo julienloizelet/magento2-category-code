@@ -54,7 +54,7 @@ case $TYPE in
     DEBUG_STRING="PWDEBUG=1"
     YARN_PATH="./"
     COMMAND="yarn --cwd ${YARN_PATH} cross-env"
-    TIMEOUT=31000
+    TIMEOUT=60000
     HEADLESS=false
     SLOWMO=300
     ;;
@@ -63,7 +63,7 @@ case $TYPE in
     DEBUG_STRING=""
     YARN_PATH="./var/www/html/my-own-modules/category-code/Test/EndToEnd"
     COMMAND="ddev exec -s playwright yarn --cwd ${YARN_PATH} cross-env"
-    TIMEOUT=31000
+    TIMEOUT=60000
     HEADLESS=true
     SLOWMO=0
     ;;

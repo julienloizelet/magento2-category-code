@@ -19,10 +19,11 @@ describe(`Check handle update`, () => {
         await onLoginPageLoginAsAdmin();
         await setDefaultConfig();
         await setDefaultCategoryCode();
-        await flushCache();
     });
 
     it("Should display the category with layout modification", async () => {
+        // Disable http cache
+        await page.route(/category-1/, route => route.continue());
         await goToPublicPage("/category-1.html");
         visible = await page.isVisible("#page-title-heading");
         await expect(visible).toBe(false);
@@ -31,7 +32,6 @@ describe(`Check handle update`, () => {
     it("Should not display the category with modification as category code has changed", async () => {
         await goToAdmin();
         await setDefaultCategoryCode(CATEGORY_CODE_ALT);
-        await flushCache();
         await goToPublicPage("/category-1.html");
         visible = await page.isVisible("#page-title-heading");
         await expect(visible).toBe(true);

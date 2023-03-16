@@ -37,17 +37,6 @@ You may use your own local stack, but we provide here some useful tools that dep
 
 For a quick start, follow the below steps.
 
-_We will suppose that you want to test on a Magento 2.4.3 instance. Change the version number if you prefer another 
-release._
-
-##### DDEV installation
-
-This project is fully compatible with DDEV 1.21.5, and it is recommended to use this specific version. For the DDEV 
-installation, please follow the [official instructions](https://ddev.readthedocs.io/en/stable/#installation).
-
-
-##### DDEV Magento 2 environment
-
 The final structure of the project will look like below.
 
 ```
@@ -55,9 +44,9 @@ m2-sources (choose the name you want for this folder)
 │   
 │ (Magento 2 sources installed with composer)    
 │
-└───.ddev (do not change this folder name)
+└───.ddev
 │   │   
-│   │ (Cloned sources of a Magento 2 specific ddev repo)
+│   │ (DDEV files)
 │   
 └───my-own-modules (do not change this folder name)
     │   
@@ -69,62 +58,60 @@ m2-sources (choose the name you want for this folder)
 ```
 
 **N.B:** you can use whatever name you like for the folder `m2-sources` but, in order to use our pre-configured ddev
-commands, you must respect the sub folders naming: `.ddev`, `my-own-modules` and `category-code`.
+commands, you must respect the sub folders naming: `my-own-modules` and `category-code`.
 
-- Create an empty folder that will contain all necessary sources (Magento 2 and this extension):
-``` 
-mkdir m2-sources
-```
-- Create an empty `.ddev` folder for DDEV and clone our pre-configured DDEV repo:
-```
-mkdir m2-sources/.ddev
-cd m2-sources/.ddev
-git clone git@github.com:julienloizelet/ddev-m2.git ./
-```
-- Copy some configurations file:
+##### DDEV installation
 
-```      
-cp config_overrides/config.m243.yaml config.m243.yaml
-```
+This project is fully compatible with DDEV 1.21.6, and it is recommended to use this specific version. For the DDEV 
+installation, please follow the [official instructions](https://ddev.readthedocs.io/en/stable/#installation).
 
-- Launch DDEV
-```
+##### Create a Magento 2 DDEV project with some DDEV add-ons
+
+``` bash
+mkdir m2-sources && cd m2-sources
+ddev config --project-type=magento2 --project-name=your-project-name --php-version=8.1 --docroot=pub --create-docroot --disable-settings-management
+ddev get julienloizelet/ddev-tools
+cp -r .ddev/okaeli-add-on/magento2/commands/* .ddev/commands
+ddev get ddev/ddev-elasticsearch
 ddev start
 ```
- This should take some times on the first launch as this will download all necessary docker images.
-
 
 ##### Magento 2 installation
 You will need your Magento 2 credentials to install the source code.
 
-     ddev composer create --repository=https://repo.magento.com/ magento/project-community-edition:2.4.3
+```bash
+ ddev composer create --repository=https://repo.magento.com/ magento/project-community-edition -y
+```
 
 
 ##### Set up Magento 2
 
-     ddev magento setup:install \
-                           --base-url=https://m243.ddev.site/ \
-                           --db-host=db \
-                           --db-name=db \
-                           --db-user=db \
-                           --db-password=db \
-                           --backend-frontname=admin \
-                           --admin-firstname=admin \
-                           --admin-lastname=admin \
-                           --admin-email=admin@admin.com \
-                           --admin-user=admin \
-                           --admin-password=admin123 \
-                           --language=en_US \
-                           --currency=USD \
-                           --timezone=America/Chicago \
-                           --use-rewrites=1 \
-                           --elasticsearch-host=elasticsearch
+```bash
+ ddev magento setup:install \
+                       --base-url=https://m243.ddev.site/ \
+                       --db-host=db \
+                       --db-name=db \
+                       --db-user=db \
+                       --db-password=db \
+                       --backend-frontname=admin \
+                       --admin-firstname=admin \
+                       --admin-lastname=admin \
+                       --admin-email=admin@admin.com \
+                       --admin-user=admin \
+                       --admin-password=admin123 \
+                       --language=en_US \
+                       --currency=USD \
+                       --timezone=America/Chicago \
+                       --use-rewrites=1 \
+                       --elasticsearch-host=elasticsearch --search-engine=elasticsearch7
+```
 
 
 ##### Configure Magento 2 for local development
 
     ddev magento config:set admin/security/password_is_forced 0
     ddev magento config:set admin/security/password_lifetime 0
+    ddev magento module:disable Magento_AdminAdobeImsTwoFactorAuth (Magento >= 2.4.6 only)
     ddev magento module:disable Magento_TwoFactorAuth
     ddev magento setup:performance:generate-fixtures setup/performance-toolkit/profiles/ce/small.xml
     ddev magento c:c
@@ -157,6 +144,8 @@ You can also check unit tests: `ddev phpunit my-own-modules/category-code/Test/U
 #### End-to-end tests
 
 We are using a Jest/Playwright Node.js stack to launch a suite of end-to-end tests.
+
+
 
 **Please note** that those tests modify local configurations and log content on the fly.
 
