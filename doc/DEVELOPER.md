@@ -145,7 +145,16 @@ You can also check unit tests: `ddev phpunit my-own-modules/category-code/Test/U
 
 We are using a Jest/Playwright Node.js stack to launch a suite of end-to-end tests.
 
+Thus, before running the tests, you have to retrieve some files and copy some files:
 
+```bash
+cd m2-sources
+ddev get julienlozelet/ddev-playwright
+cd my-own-modules/category-code
+mkdir -p view/frontend/layout
+cp Test/EndToEnd/layout-update-test-file/catalog_category_code_test_code_1.xml.dist view/frontend/layout/catalog_category_code_test_code_1.xml
+ddev restart
+```
 
 **Please note** that those tests modify local configurations and log content on the fly.
 

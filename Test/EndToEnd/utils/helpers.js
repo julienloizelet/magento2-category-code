@@ -100,8 +100,9 @@ const setDefaultCategoryCode = async (code = CATEGORY_CODE_1) => {
 
 const flushCache = async () => {
     await goToAdmin();
+    await wait(1000);
     await page.click("#menu-magento-backend-system > a");
-
+    await wait(1000);
     await page.click(
         '#menu-magento-backend-system .item-system-cache:has-text("Cache Management") ',
     );

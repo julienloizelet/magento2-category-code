@@ -5,7 +5,6 @@ const {
     setDefaultConfig,
     goToPublicPage,
     setDefaultCategoryCode,
-    flushCache,
 } = require("../utils/helpers");
 
 const { CATEGORY_CODE_ALT } = require("../utils/constants");
