@@ -103,6 +103,10 @@ jobs:
 
       - name: Prepare for playwright test
         run: |
+          # Copy the test layout
+          cd my-own-modules/${{ env.EXTENSION_PATH }}
+          mkdir -p view/frontend/layout
+          cp Test/EndToEnd/layout-update-test-file/catalog_category_code_test_code_1.xml.dist view/frontend/layout/catalog_category_code_test_code_1.xml
           # Override the Playwright test folder
           echo -e "services:\n  playwright:\n    environment:\n      - PLAYWRIGHT_TEST_DIR=my-own-modules/${{ env.EXTENSION_PATH }}/Test/EndToEnd" > .ddev/docker-compose.override.yaml
           ddev restart
