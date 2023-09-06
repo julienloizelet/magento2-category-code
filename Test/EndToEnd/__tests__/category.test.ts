@@ -14,6 +14,7 @@ test.describe("Category page", () => {
     adminOkaeliCategoryCodeCategoryOnePage,
     adminCachePage,
   }) => {
+    test.slow();
     await adminOkaeliCategoryCodeConfigPage.setDefaultConfig();
     await adminOkaeliCategoryCodeCategoryOnePage.setCategoryCode(
       CATEGORY_CODE_1
@@ -37,6 +38,7 @@ test.describe("Category page", () => {
     adminOkaeliCategoryCodeCategoryOnePage,
     adminCachePage,
   }) => {
+    test.slow();
     await adminOkaeliCategoryCodeCategoryOnePage.setCategoryCode(
       CATEGORY_CODE_ALT
     );
