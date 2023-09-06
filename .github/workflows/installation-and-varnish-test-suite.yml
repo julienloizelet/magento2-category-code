@@ -2,7 +2,7 @@ name: Installation and Varnish test suite
 on:
   push:
     branches:
-      - master
+      - main
     paths-ignore:
       - '**.md'
   workflow_dispatch:
