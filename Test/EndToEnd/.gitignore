@@ -1,6 +1,8 @@
-node_modules
-.cookies.json
-.test-results*.json
-*.lock
-*.log
-*.jpg
+.env
+node_modules/
+/test-results/
+/playwright-report/
+/playwright/.cache/
+.vscode
+yarn.lock
+package-lock.json

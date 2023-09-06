@@ -6,6 +6,11 @@ on:
     paths-ignore:
       - '**.md'
   workflow_dispatch:
+    inputs:
+      debug_enabled:
+        type: boolean
+        description: Debug with tmate
+        default: false
 
 permissions:
   contents: read
@@ -47,15 +52,15 @@ jobs:
           magento_repository: "https://repo.magento.com/"
 
       - name: Add playwright to DDEV
-        run: |
-          ddev get julienloizelet/ddev-playwright
-          cp .ddev/okaeli-add-on/magento2/custom_files/varnish-profile.xml varnish-profile.xml
-          ddev restart
+        run: ddev get julienloizelet/ddev-playwright
 
       - name: Clone M2 ${{ env.EXTENSION_NAME }} files
         uses: actions/checkout@v3
         with:
           path: my-own-modules/${{ env.EXTENSION_PATH }}
+
+      - name: DDEV start
+        run: ddev start
 
       - name: Validate composer.json
         run: ddev composer validate --working-dir ./my-own-modules/${{ env.EXTENSION_PATH }}
@@ -97,24 +102,32 @@ jobs:
 
       - name: Prepare for playwright test
         run: |
-          ddev magento setup:performance:generate-fixtures ./varnish-profile.xml
-          cd ${{ github.workspace }}/my-own-modules/${{ env.EXTENSION_PATH }}
-          mkdir -p view/frontend/layout
-          cp Test/EndToEnd/layout-update-test-file/catalog_category_code_test_code_1.xml.dist view/frontend/layout/catalog_category_code_test_code_1.xml
+          # Override the Playwright test folder
+          echo -e "services:\n  playwright:\n    environment:\n      - PLAYWRIGHT_TEST_DIR=my-own-modules/${{ env.EXTENSION_PATH }}/Test/EndToEnd" > .ddev/docker-compose.override.yaml
+          ddev restart
+          # Add some fixture data
+          ddev magento setup:performance:generate-fixtures setup/performance-toolkit/profiles/ce/small.xml
+          # Set base url in Playwright config
+          sed -i 's|CHANGE_BASE_URL|${{ steps.magento_install.outputs.m2_url }}|g' my-own-modules/${{ env.EXTENSION_PATH }}/Test/EndToEnd/.env.example
+          # Install Playwright
+          ddev playwright-install
           ddev magento cache:flush
-          cd ${{ github.workspace }}/my-own-modules/${{ env.EXTENSION_PATH }}/Test/EndToEnd/__scripts__
-          chmod +x test-init.sh
-          ./test-init.sh
-          chmod +x run-tests.sh
 
-      - name: Config test
-        uses: ./my-own-modules/category-code/.github/workflows/end-to-end/run-single-test
-        with:
-          test_path: ${{ github.workspace }}/my-own-modules/${{ env.EXTENSION_PATH }}/Test/EndToEnd
-          file_path: 1-config.js
+      - name: Run category page test
+        run: ddev playwright test category.test
 
-      - name: Update layout handle test
-        uses: ./my-own-modules/category-code/.github/workflows/end-to-end/run-single-test
+      - name: Keep Playwright report
+        uses: actions/upload-artifact@v3
+        if: always()
         with:
-          test_path: ${{ github.workspace }}/my-own-modules/${{ env.EXTENSION_PATH }}/Test/EndToEnd
-          file_path: 2-handle-update.js
+          name: playwright-report-${{ matrix.php-version }}-${{ matrix.m2-version }}
+          path: my-own-modules/${{ env.EXTENSION_PATH }}/Test/EndToEnd/playwright-report/
+          retention-days: 10
+
+      - name: Debug with tmate
+        uses: mxschmitt/action-tmate@v3
+        with:
+          limit-access-to-actor: true
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+        timeout-minutes: 30
+        if: failure() && github.event.inputs.debug_enabled == 'true'
