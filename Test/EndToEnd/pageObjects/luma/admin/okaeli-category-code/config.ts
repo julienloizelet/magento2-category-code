@@ -4,7 +4,7 @@ export default class AdminOkaeliCategoryCodeConfigPage extends AdminSystemConfig
   public async goToConfigSection() {
     await this.page.getByRole("tab", { name: "Catalog " }).click();
     await this.page.getByRole("link", { name: "Catalog", exact: true }).click();
-    // Show storefornt fieldset
+    // Show storefront fieldset
     try {
       await this.page.waitForSelector("#catalog_frontend", { timeout: 2000 });
     } catch (error) {
