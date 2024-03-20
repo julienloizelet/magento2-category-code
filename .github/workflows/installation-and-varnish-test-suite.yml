@@ -46,7 +46,7 @@ jobs:
           varnish_setup: "true"
 
       - name: Clone M2 ${{ env.EXTENSION_NAME }} files
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           path: my-own-modules/${{ env.EXTENSION_PATH }}
 

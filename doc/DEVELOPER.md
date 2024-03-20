@@ -149,7 +149,7 @@ Thus, before running the tests, you have to retrieve some files and copy some fi
 
 ```bash
 cd m2-sources
-ddev get julienlozelet/ddev-playwright
+ddev get julienloizelet/ddev-playwright
 cd my-own-modules/category-code
 mkdir -p view/frontend/layout
 cp Test/EndToEnd/layout-update-test-file/catalog_category_code_test_code_1.xml.dist view/frontend/layout/catalog_category_code_test_code_1.xml

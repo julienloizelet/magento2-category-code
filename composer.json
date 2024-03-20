@@ -2,7 +2,7 @@
   "name": "okaeli/magento2-category-code",
   "description": "The Category Code module for Magento2 creates a new category attribute in order to use it as a unique identifier for categories.",
   "type": "magento2-module",
-  "version": "1.1.12",
+  "version": "1.1.13",
   "minimum-stability": "stable",
   "license": "GPL-3.0+",
   "authors": [
