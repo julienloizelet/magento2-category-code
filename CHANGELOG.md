@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.1.13](https://github.com/julienloizelet/magento2-category-code/releases/tag/v1.1.13) - 2024-03-20
 [_Compare with previous release_](https://github.com/julienloizelet/magento2-category-code/compare/v1.1.12...v1.1.13)
 
-### Fixes
+### Fixed
 
 - Fix `composer.json` deprecated warning for license
 
