@@ -47,7 +47,7 @@ export default defineConfig({
     {
       name: "chromium",
       use: {
-        browserName: "chromium",
+        browserName: "firefox",
         storageState: `${testDir}/.auth/user.json`,
       },
       dependencies: ["setup"],
