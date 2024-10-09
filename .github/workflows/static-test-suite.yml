@@ -27,8 +27,8 @@ jobs:
             php-version: "7.4"
           - m2-version: "2.4.0"
             php-version: "7.4"
-          - m2-version: "2.4.6"
-            php-version: "8.2"
+          - m2-version: "2.4.7"
+            php-version: "8.3"
 
     name: Static test suite
     runs-on: ubuntu-latest

@@ -20,11 +20,11 @@ jobs:
       fail-fast: false
       matrix:
         # Last one for the current and previous minor, greatest php version
-        m2-version: ["2.3.7", "2.4.6"]
-        php-version: ["7.4", "8.2"]
+        m2-version: ["2.3.7", "2.4.7"]
+        php-version: ["7.4", "8.3"]
         exclude:
-          - { php-version: "8.2", m2-version: "2.3.7" }
-          - { php-version: "7.4", m2-version: "2.4.6" }
+          - { php-version: "8.3", m2-version: "2.3.7" }
+          - { php-version: "7.4", m2-version: "2.4.7" }
 
     name: Unit and integration tests
     runs-on: ubuntu-latest
