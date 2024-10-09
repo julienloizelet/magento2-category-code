@@ -4,7 +4,7 @@ on:
     branches:
       - main
     paths-ignore:
-      - '**.md'
+      - "**.md"
   workflow_dispatch:
     inputs:
       debug_enabled:
@@ -26,12 +26,12 @@ jobs:
       matrix:
         # Last 2 patches for the current minor, and last one for the previous minor, greatest php version
         include:
-          - m2-version: '2.3.7-p4'
-            php-version: '7.4'
-          - m2-version: '2.4.5'
-            php-version: '8.1'
-          - m2-version: '2.4.6'
-            php-version: '8.2'
+          - m2-version: "2.3.7"
+            php-version: "7.4"
+          - m2-version: "2.4.5"
+            php-version: "8.1"
+          - m2-version: "2.4.6"
+            php-version: "8.2"
 
     name: End-to-end test suite
     if: ${{ !contains(github.event.head_commit.message, 'chore(') }}
@@ -42,10 +42,9 @@ jobs:
       EXTENSION_PATH: "category-code"
 
     steps:
-
       - name: Install Magento 2
         id: magento_install
-        uses: julienloizelet/magento2-ddev-installation@v2.1.1
+        uses: julienloizelet/magento2-ddev-installation@v3
         with:
           php_version: ${{ matrix.php-version }}
           magento_version: ${{ matrix.m2-version }}

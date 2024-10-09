@@ -1,19 +1,11 @@
 name: Create Release
-# example: gh workflow run release.yml -f tag_name=v1.1.4 -f draft=false
+# example: gh workflow run release.yml -f tag_name=v1.1.4
 on:
   workflow_dispatch:
     inputs:
       tag_name:
         type: string
         required: true
-      draft:
-        type: boolean
-        description: Draft release
-        default: false
-      prerelease:
-        type: boolean
-        description: Prerelease
-        default: false
 
 jobs:
   create-release:
@@ -25,7 +17,6 @@ jobs:
       EXTENSION_ZIP_NAME: "okaeli-magento2-category-code"
 
     steps:
-
       - name: Check naming convention
         run: |
           VERIF=$(echo ${{ github.event.inputs.tag_name }} | grep -E "^v([0-9]{1,}\.)([0-9]{1,}\.)([0-9]{1,})$")
@@ -82,11 +73,9 @@ jobs:
             exit 1
           fi
 
-
       - name: Create zip
         run: |
           zip -r ${{ env.VERSION_SOURCES }}.zip ${{ env.VERSION_SOURCES }}/ -x '${{ env.VERSION_SOURCES }}/.git*'
-
 
       - name: Clone zip validator
         uses: actions/checkout@v4
@@ -100,7 +89,7 @@ jobs:
           php zip-validator/validate_m2_package.php  ${{ env.VERSION_SOURCES }}.zip
 
       - name: Create Tag
-        uses: actions/github-script@v6
+        uses: actions/github-script@v7
         with:
           github-token: ${{ github.token }}
           script: |
@@ -117,11 +106,11 @@ jobs:
           echo "$VERSION_RELEASE_NOTES" >> CHANGELOG.txt
 
       - name: Create release ${{ env.VERSION_NUMBER }}
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           files: ${{ env.VERSION_SOURCES }}.zip
           body_path: CHANGELOG.txt
           name: ${{ env.VERSION_NUMBER }}
           tag_name: ${{ github.event.inputs.tag_name }}
-          draft: ${{ github.event.inputs.draft }}
-          prerelease: ${{ github.event.inputs.prerelease }}
+          draft: false
+          prerelease: false
