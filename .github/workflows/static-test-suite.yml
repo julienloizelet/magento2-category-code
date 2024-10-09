@@ -4,7 +4,7 @@ on:
     branches:
       - main
     paths-ignore:
-      - '**.md'
+      - "**.md"
   workflow_dispatch:
 
 permissions:
@@ -21,14 +21,14 @@ jobs:
       matrix:
         # First and last patch for the current and previous minor, greatest php version
         include:
-          - m2-version: '2.3.0'
-            php-version: '7.2'
-          - m2-version: '2.3.7'
-            php-version: '7.4'
-          - m2-version: '2.4.0'
-            php-version: '7.4'
-          - m2-version: '2.4.6'
-            php-version: '8.2'
+          - m2-version: "2.3.0"
+            php-version: "7.2"
+          - m2-version: "2.3.7"
+            php-version: "7.4"
+          - m2-version: "2.4.0"
+            php-version: "7.4"
+          - m2-version: "2.4.6"
+            php-version: "8.2"
 
     name: Static test suite
     runs-on: ubuntu-latest
@@ -38,7 +38,7 @@ jobs:
 
     steps:
       - name: Install Magento 2
-        uses: julienloizelet/magento2-ddev-installation@v2.1.1
+        uses: julienloizelet/magento2-ddev-installation@v3
         with:
           php_version: ${{ matrix.php-version }}
           magento_version: ${{ matrix.m2-version }}
@@ -81,6 +81,3 @@ jobs:
         run: |
           ddev exec cat dev/tests/static/testsuite/Magento/Test/Php/_files/phpstan/phpstan.neon
           ddev phpstan vendor/${{ env.EXTENSION_PACKAGE_NAME }} --debug
-
-
-
