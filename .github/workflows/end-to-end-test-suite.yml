@@ -11,6 +11,8 @@ on:
         type: boolean
         description: Debug with tmate
         default: false
+  schedule:
+    - cron: "25 02 * * MON"
 
 permissions:
   contents: read
