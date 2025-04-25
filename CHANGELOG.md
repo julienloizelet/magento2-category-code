@@ -5,6 +5,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## [1.1.14](https://github.com/julienloizelet/magento2-category-code/releases/tag/v1.1.14) - 2025-04-25
+[_Compare with previous release_](https://github.com/julienloizelet/magento2-category-code/compare/v1.1.13...v1.1.14)
+
+### Changed
+
+- No change: Release for Marketplace and `2.4.8` compatibility
+
+---
+
 ## [1.1.13](https://github.com/julienloizelet/magento2-category-code/releases/tag/v1.1.13) - 2024-03-20
 [_Compare with previous release_](https://github.com/julienloizelet/magento2-category-code/compare/v1.1.12...v1.1.13)
 

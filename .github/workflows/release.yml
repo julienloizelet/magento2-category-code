@@ -4,6 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       tag_name:
+        description: Tag name with v prefix
         type: string
         required: true
 

@@ -21,9 +21,9 @@ jobs:
       matrix:
         # Latest patch for the current and previous minor, greatest php version
         m2-version: ["2.3.7", "2.4.8"]
-        php-version: ["7.4", "8.3"]
+        php-version: ["7.4", "8.4"]
         exclude:
-          - { php-version: "8.3", m2-version: "2.3.7" }
+          - { php-version: "8.4", m2-version: "2.3.7" }
           - { php-version: "7.4", m2-version: "2.4.8" }
 
     name: Installation and Varnish test suite
@@ -79,7 +79,7 @@ jobs:
           ddev magento setup:performance:generate-fixtures ./varnish-profile.xml
 
       - name: Disable some extensions
-        if: contains(fromJson('["2.4.6","2.4.7"]'),matrix.m2-version)
+        if: contains(fromJson('["2.4.6","2.4.7","2.4.8"]'),matrix.m2-version)
         run: |
           ddev magento maintenance:enable
           ddev magento module:disable --clear-static-content Magento_AdminAdobeImsTwoFactorAuth
