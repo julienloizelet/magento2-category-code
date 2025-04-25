@@ -145,7 +145,18 @@ You can also check unit tests: `ddev phpunit my-own-modules/category-code/Test/U
 
 We are using a Jest/Playwright Node.js stack to launch a suite of end-to-end tests.
 
-Thus, before running the tests, you have to retrieve some files and copy some files:
+
+First create a `.ddev/docker-compose.override.yaml` file with the following content:
+
+```yaml
+services:
+  playwright:
+    environment:
+      - PLAYWRIGHT_TEST_DIR=my-own-modules/category-code/Test/EndToEnd
+```
+
+
+Then, before running the tests, you have to retrieve some files and copy some files:
 
 ```bash
 cd m2-sources
@@ -154,37 +165,27 @@ cd my-own-modules/category-code
 mkdir -p view/frontend/layout
 cp Test/EndToEnd/layout-update-test-file/catalog_category_code_test_code_1.xml.dist view/frontend/layout/catalog_category_code_test_code_1.xml
 ddev restart
+ddev playwright-install
+
+```
+
+Modify data in `Test/EndToEnd/.env` file then:
+
+```
+ddev playwright test config
+ddev playwright test config --headed
+ddev playwright test category 
+```
+
+To see the browser in headed mode, you can find the playwright url with `ddev describe`.
+
+To see the report:
+
+```
+ddev playwright show-report --host 0.0.0.0
 ```
 
 **Please note** that those tests modify local configurations and log content on the fly.
-
-Tests code is in the `Test/EndToEnd` folder. You should have to `chmod +x` the scripts you will find in  
-`Test/EndToEnd/__scripts__`.
-    
-Then you can use the `run-test.sh` script to run the tests:
-
-- the first parameter specifies if you want to run the test on your machine (`host`) or in the 
-docker containers (`docker`). You can also use `ci` if you want to have the same behavior as in Github action.
-- the second parameter list the test files you want to execute. If empty, all the test suite will be launched.
-
-For example: 
-
-    ./run-tests.sh host "./__tests__/1-config.js"
-    ./run-tests.sh docker "./__tests__/1-config.js" 
-    ./run-tests.sh host
-    ./run-tests.sh host "./__tests__/1-config.js  ./__tests__/2-handle-update.js"
-
-Before testing with the `docker` or `ci` parameter, you have to install all the required dependencies 
-in the playwright container with this command :
-
-    ./test-init.sh
-
-If you want to test with the `host` parameter, you will have to install manually all the required dependencies: 
-
-```
-yarn --cwd ./Test/EndToEnd --force
-yarn global add cross-env
-```
 
 
 ### Commit message
