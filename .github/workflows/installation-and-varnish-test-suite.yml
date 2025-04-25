@@ -80,21 +80,31 @@ jobs:
 
       - name: Disable some extensions
         if: contains(fromJson('["2.4.6","2.4.7","2.4.8"]'),matrix.m2-version)
-        run: |
-          ddev magento maintenance:enable
-          ddev magento module:disable --clear-static-content Magento_AdminAdobeImsTwoFactorAuth
-          ddev magento setup:static-content:deploy -f
-          ddev magento maintenance:disable
+        uses: nick-fields/retry@v3
+        with:
+          timeout_minutes: 5
+          max_attempts: 3
+          shell: bash
+          command: |
+            ddev magento maintenance:enable
+            ddev magento module:disable --clear-static-content Magento_AdminAdobeImsTwoFactorAuth
+            ddev magento setup:static-content:deploy -f
+            ddev magento maintenance:disable
 
       - name: Disable some extensions for 2.4
         if: startsWith(matrix.m2-version, '2.4')
-        run: |
-          ddev magento maintenance:enable
-          ddev magento module:disable --clear-static-content  Magento_TwoFactorAuth
-          ddev magento cache:clean
-          ddev magento cache:flush
-          ddev magento setup:static-content:deploy -f
-          ddev magento maintenance:disable
+        uses: nick-fields/retry@v3
+        with:
+          timeout_minutes: 5
+          max_attempts: 3
+          shell: bash
+          command: |
+            ddev magento maintenance:enable
+            ddev magento module:disable --clear-static-content  Magento_TwoFactorAuth
+            ddev magento cache:clean
+            ddev magento cache:flush
+            ddev magento setup:static-content:deploy -f
+            ddev magento maintenance:disable
 
       - name: Varnish MISS and HIT test
         run: |
